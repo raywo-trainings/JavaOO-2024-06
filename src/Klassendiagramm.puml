@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Customer {
+  -firstname: String
+  -lastname: String
+  -dateOfBirth: ZonedDateTime
+
+  +setFirstname(firstname: String): void
+  +setLastname(lastname: String): void
+  +setDateOfBirth(dateOfBirth: ZonedDateTime): void
+
+  +getFirstname(): String
+  +getLastname(): String
+  +getDateOfBirth(): String
+}
+
+class BankSystem {
+  -customers: List<Customer>
+  -accounts: List<Account>
+
+  +addCustomer(customer: Customer): void
+  +addAccount(account: Account): void
+}
+
+class Account {
+  -iban: String
+  -balance: BigDecimal
+  -owner: Customer
+
+  +getIban(): String
+  +getBalance(): BigDecimal
+  +getOwner(): Customer
+
+  +deposit(amount: BigDecimal): BigDecimal
+  +withdraw(amount: BigDecimal): BigDecimal
+}
+
+' Girokonto
+class CurrentAccount {
+  -limit: BigDecimal
+  -debitInterestRate: float
+
+  +getLimit(): BigDecimal
+  +getDebitInterestRate(): float
+
+  +setLimit(limit: BigDecimal): void
+  +setDebitInterestRate(interestRate: float): void
+}
+
+' Sparkonto
+class SavingsAccount {
+  -interestRate: float
+
+  +getInterestRate(): float
+  +setInterestRate(interestRate: float): void
+}
+
+Customer "1" - "*" Account
+BankSystem "1" -- "0..n" Account
+BankSystem "1" -- "0..n" Customer
+
+Account <|-- CurrentAccount
+Account <|-- SavingsAccount
+
+@enduml
