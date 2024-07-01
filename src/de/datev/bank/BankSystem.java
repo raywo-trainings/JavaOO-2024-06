@@ -4,6 +4,9 @@ import java.util.*;
 
 public class BankSystem {
 
+  public static final int ASCENDING_ORDER = 1;
+  public static final int DESCENDING_ORDER = -1;
+
 
   private final List<Customer> customers;
   private final List<Account> accounts;
@@ -45,13 +48,14 @@ public class BankSystem {
 
 
   public List<Account> getSortedAccounts(int direction) {
-    List<Account> sortedAccounts = new ArrayList<>();
-    Collections.copy(sortedAccounts, accounts);
+    List<Account> sortedAccounts = new ArrayList<>(accounts.size());
+    sortedAccounts.addAll(accounts);
+
     Comparator<Account> comparator = null;
 
-    if (direction == -1) {
+    if (direction == ASCENDING_ORDER) {
       comparator = new AscendingAccountComparator();
-    } else if (direction == 1) {
+    } else if (direction == DESCENDING_ORDER) {
       comparator = new DescendingAccountComparator();
     }
 

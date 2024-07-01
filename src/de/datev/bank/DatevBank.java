@@ -51,7 +51,7 @@ public class DatevBank {
     system.addAccount(new CurrentAccount("DE4715", customer));
 
     System.out.println("\n************");
-    for (Account a : system.getAccounts()) {
+    for (Account a : system.getSortedAccounts(BankSystem.DESCENDING_ORDER)) {
       System.out.println(a);
     }
   }
