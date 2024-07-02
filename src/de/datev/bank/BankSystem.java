@@ -1,12 +1,13 @@
 package de.datev.bank;
 
-import java.util.*;
+import de.datev.bank.account.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BankSystem {
-
-  public static final int ASCENDING_ORDER = 1;
-  public static final int DESCENDING_ORDER = -1;
-
 
   private final List<Customer> customers;
   private final List<Account> accounts;
@@ -37,6 +38,7 @@ public class BankSystem {
     * Anwendung hier
    */
 
+
   public List<Account> getAccounts() {
     // Liefert immer eine nach IBAN aufsteigend sortierte Liste
 //    Collections.sort(accounts); // O(n*log(n))
@@ -47,16 +49,22 @@ public class BankSystem {
   }
 
 
-  public List<Account> getSortedAccounts(int direction) {
-    List<Account> sortedAccounts = new ArrayList<>(accounts.size());
-    sortedAccounts.addAll(accounts);
-
+  public List<Account> getSortedAccounts(SortOrder order) {
+    List<Account> sortedAccounts = new ArrayList<>(accounts);
     Comparator<Account> comparator = null;
 
-    if (direction == ASCENDING_ORDER) {
-      comparator = new AscendingAccountComparator();
-    } else if (direction == DESCENDING_ORDER) {
-      comparator = new DescendingAccountComparator();
+    switch (order) {
+      case ASCENDING:
+        comparator = new AscendingAccountComparator();
+        break;
+
+      case DESCENDING:
+        comparator = new DescendingAccountComparator();
+        break;
+
+      default:
+        comparator = new AscendingAccountComparator();
+        break;
     }
 
     sortedAccounts.sort(comparator);
@@ -85,19 +93,6 @@ public class BankSystem {
 
     return result;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   public List<SavingsAccount> getSavingsAccounts() {

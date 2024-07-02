@@ -1,5 +1,8 @@
-package de.datev.bank;
+package de.datev.bank.account;
 
+import de.datev.bank.Customer;
+
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 public class SavingsAccount extends Account {
@@ -21,6 +24,12 @@ public class SavingsAccount extends Account {
 
   public void setInterestRate(float interestRate) {
     this.interestRate = interestRate;
+  }
+
+
+  @Override
+  public BigDecimal getAvailableAmount() {
+    return this.getBalance();
   }
 
 

@@ -1,4 +1,6 @@
-package de.datev.bank;
+package de.datev.bank.account;
+
+import de.datev.bank.Customer;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -39,8 +41,14 @@ public class CurrentAccount extends Account {
 
 
   @Override
+  public BigDecimal getAvailableAmount() {
+    return getBalance().add(limit);
+  }
+
+
+  @Override
   protected boolean isAvailable(BigDecimal amount) {
-    BigDecimal maxAmount = getBalance().add(limit);
+    BigDecimal maxAmount = getAvailableAmount();
 
     return amount.compareTo(maxAmount) <= 0;
   }

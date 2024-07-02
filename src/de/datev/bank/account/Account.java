@@ -1,4 +1,6 @@
-package de.datev.bank;
+package de.datev.bank.account;
+
+import de.datev.bank.Customer;
 
 import java.math.BigDecimal;
 import java.text.Format;
@@ -17,16 +19,25 @@ public abstract class Account implements Comparable<Account> {
   }
 
 
-  public BigDecimal deposit(BigDecimal amount) {
+  public BigDecimal deposit(BigDecimal amount) throws AmountNegativeException {
+    if (amount.compareTo(BigDecimal.ZERO) < 0) {
+      throw new AmountNegativeException("Der Betrag darf nicht negativ sein!");
+    }
+
     balance = balance.add(amount);
 
     return balance;
   }
 
 
-  public BigDecimal withdraw(BigDecimal amount) {
+  public BigDecimal withdraw(BigDecimal amount) throws AmountNotAvailableException, AmountNegativeException {
+    if (amount.compareTo(BigDecimal.ZERO) < 0) {
+      throw new AmountNegativeException("Der Betrag darf nicht negativ sein!");
+    }
+
     if (!isAvailable(amount)) {
-      return balance;
+      throw new AmountNotAvailableException("Der angeforderte Betrag ist nicht verfügbar",
+          getAvailableAmount());
     }
 
     balance = balance.subtract(amount);
@@ -70,6 +81,9 @@ public abstract class Account implements Comparable<Account> {
     return "[" + iban + "]: " + formattedBalance() + ", "
         + additionalInfo() + ", Inhaber: " + owner;
   }
+
+
+  public abstract BigDecimal getAvailableAmount();
 
 
   protected boolean isAvailable(BigDecimal amount) {

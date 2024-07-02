@@ -1,4 +1,4 @@
-package de.datev.bank;
+package de.datev.bank.account;
 
 import java.util.Comparator;
 

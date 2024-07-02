@@ -1,5 +1,7 @@
 package de.datev.bank;
 
+import de.datev.bank.account.Account;
+
 public class BankSystemOld {
 
   private Customer[] customers;
